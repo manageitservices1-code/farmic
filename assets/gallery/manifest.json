@@ -1,0 +1,27 @@
+[
+  {
+    "type": "image",
+    "src": "/assets/gallery/images/01-seed-sourcing.jpg",
+    "caption": "Seeds, sourced straight from the mill"
+  },
+  {
+    "type": "image",
+    "src": "/assets/gallery/images/02-cold-press-expeller.jpg",
+    "caption": "Cold-pressed, the traditional way"
+  },
+  {
+    "type": "image",
+    "src": "/assets/gallery/images/03-outlet-storefront.jpg",
+    "caption": "A Farmic outlet, in every neighbourhood"
+  },
+  {
+    "type": "image",
+    "src": "/assets/gallery/images/04-bottled-oils.jpg",
+    "caption": "Bottled fresh, straight from the press"
+  },
+  {
+    "type": "image",
+    "src": "/assets/gallery/images/05-value-chain.jpg",
+    "caption": "One chain, start to finish"
+  }
+]

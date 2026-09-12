@@ -1,0 +1,8 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+<circle cx="60" cy="60" r="56" fill="#FAECE7" stroke="#993C1D" stroke-width="2"/>
+
+<ellipse cx="60" cy="60" rx="4" ry="12" fill="#F4E14A" transform="rotate(0 60 60) translate(0 -13)"/><ellipse cx="60" cy="60" rx="4" ry="12" fill="#F4E14A" transform="rotate(45 60 60) translate(0 -13)"/><ellipse cx="60" cy="60" rx="4" ry="12" fill="#F4E14A" transform="rotate(90 60 60) translate(0 -13)"/><ellipse cx="60" cy="60" rx="4" ry="12" fill="#F4E14A" transform="rotate(135 60 60) translate(0 -13)"/><ellipse cx="60" cy="60" rx="4" ry="12" fill="#F4E14A" transform="rotate(180 60 60) translate(0 -13)"/><ellipse cx="60" cy="60" rx="4" ry="12" fill="#F4E14A" transform="rotate(225 60 60) translate(0 -13)"/><ellipse cx="60" cy="60" rx="4" ry="12" fill="#F4E14A" transform="rotate(270 60 60) translate(0 -13)"/><ellipse cx="60" cy="60" rx="4" ry="12" fill="#F4E14A" transform="rotate(315 60 60) translate(0 -13)"/>
+<circle cx="60" cy="60" r="8" fill="#2B1B0E"/>
+<ellipse cx="60" cy="86" rx="4" ry="2" fill="#1c130a"/>
+
+</svg>
