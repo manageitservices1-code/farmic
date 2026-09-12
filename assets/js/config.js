@@ -36,10 +36,10 @@ window.FARMIC_CONFIG = {
   // ---- Social media links ----
   // Leave a value as "" (empty quotes) to hide that icon entirely.
   social: {
-   youtube:   "https://www.youtube.com/@FamricAgro",
+    youtube:   "",
     x:         "",
-    facebook:  "https://www.facebook.com/profile.php?id=61594171772794",
-    instagram: "https://www.instagram.com/famricagro/"
+    facebook:  "",
+    instagram: ""
   }
 
 };

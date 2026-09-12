@@ -1,6 +1,11 @@
 # Gallery folder
 
-Drop your real photos and videos here, then list them in `manifest.json` so they show up in the homepage carousel.
+Drop your real photos and videos here, then list them in `manifest.json` so they show up on the homepage.
+
+Photos and videos appear in **separate tabs** ("Photos" / "Videos") on the homepage — you don't need to
+do anything to make this work, it's automatic based on each item's `"type"` in the manifest. The Photos
+tab auto-advances every few seconds like a slideshow; the Videos tab does not — videos only change when a
+visitor clicks the arrows or dots, so nothing interrupts a video someone is watching.
 
 ## Adding an image
 1. Put the file in `images/` (jpg or png work well; keep files under ~1–2MB each so the page loads fast).
@@ -15,7 +20,7 @@ Drop your real photos and videos here, then list them in `manifest.json` so they
    ```json
    { "type": "video", "src": "/assets/gallery/videos/your-file.mp4", "caption": "Your caption here" }
    ```
-   Videos autoplay muted and loop while their slide is showing, so keep clips short (10–20 seconds works best).
+   Videos show playback controls (play/pause, volume, scrub bar) so visitors can watch at their own pace.
 
 3. If a video doesn't play for some visitors, it's usually the file's encoding, not the site — export
    again with a standard/baseline H.264 profile (most phone cameras and editors like iMovie, Premiere,
@@ -30,6 +35,7 @@ Drop your real photos and videos here, then list them in `manifest.json` so they
    The browser will pick whichever format it supports.
 
 ## Notes
-- Order in `manifest.json` is the order slides appear in — just reorder the lines to reorder the carousel.
+- Order in `manifest.json` is the order items appear within their tab — reorder the lines to reorder either the Photos or Videos tab.
 - The five images currently in `images/` are placeholder brand illustrations, not real photos — swap them out for actual photos of your seeds, outlets and process whenever you're ready, and remove their lines from `manifest.json` (or just overwrite the files, keeping the same names).
-- There's no need to touch any other file — the carousel on the homepage reads `manifest.json` automatically.
+- If there are no videos listed yet, the Videos tab still shows and simply says "No videos yet" — it won't disappear or error out.
+- There's no need to touch any other file — the gallery on the homepage reads `manifest.json` automatically.

@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var root = document.getElementById('gallery-carousel');
   if (!root) return;
 
+  var tabsWrap = document.querySelector('.gallery-tabs');
   var track = root.querySelector('.carousel-track');
   var dotsWrap = root.querySelector('.carousel-dots');
   var prevBtn = root.querySelector('.carousel-prev');
@@ -12,23 +13,60 @@ document.addEventListener('DOMContentLoaded', function () {
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var current = 0;
   var timer = null;
-  var items = [];
+  var byTab = { photos: [], videos: [] };
+  var activeTab = 'photos';
 
   fetch(manifestUrl)
     .then(function (r) { return r.json(); })
     .then(function (data) {
-      items = Array.isArray(data) ? data : [];
+      var items = Array.isArray(data) ? data : [];
+      byTab.photos = items.filter(function (i) { return i.type !== 'video'; });
+      byTab.videos = items.filter(function (i) { return i.type === 'video'; });
+
       if (!items.length) {
         root.innerHTML = '<p style="padding:24px; text-align:center; color:var(--text-muted);">No gallery items yet — add images or videos to assets/gallery and list them in manifest.json.</p>';
+        if (tabsWrap) tabsWrap.style.display = 'none';
         return;
       }
-      build();
+
+      if (tabsWrap) {
+        tabsWrap.querySelectorAll('.gallery-tab').forEach(function (btn) {
+          btn.addEventListener('click', function () { switchTab(btn.getAttribute('data-tab')); });
+        });
+      }
+
+      renderTab('photos');
     })
     .catch(function () {
       root.innerHTML = '<p style="padding:24px; text-align:center; color:var(--text-muted);">Gallery could not be loaded.</p>';
     });
 
-  function build() {
+  function switchTab(tab) {
+    if (tab === activeTab) return;
+    activeTab = tab;
+    stop();
+    if (tabsWrap) {
+      tabsWrap.querySelectorAll('.gallery-tab').forEach(function (btn) {
+        var isActive = btn.getAttribute('data-tab') === tab;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+    }
+    renderTab(tab);
+  }
+
+  function renderTab(tab) {
+    var items = byTab[tab] || [];
+    current = 0;
+    track.innerHTML = '';
+    dotsWrap.innerHTML = '';
+
+    if (!items.length) {
+      var label = tab === 'videos' ? 'videos' : 'photos';
+      track.innerHTML = '<p style="padding:24px; text-align:center; color:var(--text-muted);">No ' + label + ' yet.</p>';
+      return;
+    }
+
     items.forEach(function (item, i) {
       var slide = document.createElement('div');
       slide.className = 'carousel-slide' + (i === 0 ? ' active' : '');
@@ -39,9 +77,8 @@ document.addEventListener('DOMContentLoaded', function () {
         media.muted = true;
         media.loop = true;
         media.playsInline = true;
+        media.controls = true;
         media.setAttribute('aria-label', item.caption || '');
-        // Supports either a single "src", or a "sources" array for format
-        // fallback, e.g. [{src:"...mp4", type:"video/mp4"}, {src:"...webm", type:"video/webm"}]
         var sourceList = Array.isArray(item.sources) ? item.sources : [{ src: item.src }];
         sourceList.forEach(function (s) {
           var sourceEl = document.createElement('source');
@@ -73,20 +110,25 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     playActiveVideo();
-    if (!reduceMotion) start();
 
-    root.addEventListener('mouseenter', stop);
-    root.addEventListener('mouseleave', function () { if (!reduceMotion) start(); });
-
-    prevBtn.addEventListener('click', function () { goTo(current - 1); restart(); });
-    nextBtn.addEventListener('click', function () { goTo(current + 1); restart(); });
+    // Auto-advance only makes sense for a passive photo slideshow — videos are
+    // watched at the visitor's own pace, so the videos tab is manual-only
+    // (prev/next arrows and dots still work, it just never advances on its own).
+    if (tab === 'photos' && !reduceMotion) start();
   }
+
+  root.addEventListener('mouseenter', stop);
+  root.addEventListener('mouseleave', function () { if (activeTab === 'photos' && !reduceMotion) start(); });
+
+  prevBtn.addEventListener('click', function () { goTo(current - 1); restart(); });
+  nextBtn.addEventListener('click', function () { goTo(current + 1); restart(); });
 
   function slides() { return track.querySelectorAll('.carousel-slide'); }
   function dots() { return dotsWrap.querySelectorAll('button'); }
 
   function goTo(index) {
     var s = slides();
+    if (!s.length) return;
     var d = dots();
     current = (index + s.length) % s.length;
     s.forEach(function (el, i) { el.classList.toggle('active', i === current); });
@@ -110,5 +152,5 @@ document.addEventListener('DOMContentLoaded', function () {
   function stop() {
     if (timer) { clearInterval(timer); timer = null; }
   }
-  function restart() { if (!reduceMotion) start(); }
+  function restart() { if (activeTab === 'photos' && !reduceMotion) start(); }
 });
