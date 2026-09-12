@@ -23,5 +23,10 @@
     "type": "image",
     "src": "/assets/gallery/images/05-value-chain.jpg",
     "caption": "One chain, start to finish"
+  },
+  { 
+	"type": "video", 
+    "src": "/assets/gallery/videos/Kinrud_testing.mp4", 
+	"caption": "Your caption here" 
   }
 ]
